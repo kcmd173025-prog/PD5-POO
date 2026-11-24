@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS stands (
+    id VARCHAR(20) PRIMARY KEY,
+    ubicacion VARCHAR(100) NOT NULL,
+    metros_cuadrados DOUBLE NOT NULL,
+    costo DOUBLE NOT NULL,
+    estado VARCHAR(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS editoriales (
+    id VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    pais VARCHAR(60) NOT NULL,
+    contacto VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reservaciones (
+    id VARCHAR(20) PRIMARY KEY,
+    id_stand VARCHAR(20) NOT NULL UNIQUE,
+    id_editorial VARCHAR(20) NOT NULL,
+    fecha VARCHAR(20) NOT NULL,
+    estado_pago VARCHAR(30) NOT NULL,
+    CONSTRAINT fk_res_stand FOREIGN KEY (id_stand) REFERENCES stands(id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT fk_res_editorial FOREIGN KEY (id_editorial) REFERENCES editoriales(id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS notificaciones (
+    id VARCHAR(30) PRIMARY KEY,
+    id_editorial VARCHAR(20) NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    mensaje VARCHAR(255) NOT NULL,
+    fecha VARCHAR(20) NOT NULL,
+    leida BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT fk_noti_editorial FOREIGN KEY (id_editorial) REFERENCES editoriales(id)
+        ON UPDATE RESTRICT ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

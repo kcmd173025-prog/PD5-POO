@@ -1,0 +1,1 @@
+Coloca aqui el archivo .jar del conector JDBC de MySQL (por ejemplo: mysql-connector-j-8.4.0.jar) antes de compilar y ejecutar el proyecto.
